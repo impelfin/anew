@@ -11,7 +11,7 @@ int  main() {
             for(j=1; j<=9; j++)
                 printf("%d * %d = %d \n", i, j, i*j);
         } else {
-            printf("Insert number 2~9. Retype Again~!!");
+            printf("Insert number 2~9. Retype Again~!!\n");
         }
     }
 }
