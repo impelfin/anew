@@ -1,7 +1,9 @@
 #!/bin/bash
 
 if [ $# -eq 0 ]; then
-	echo "Enter the contry name~!!"
+	echo "Enter the Contry name.!!"
+elif [ $# -ge 2 ]; then
+	echo "This scripts require only one parameter."
 else
 	case "$1" in
 		ko)
