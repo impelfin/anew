@@ -1,1 +1,5 @@
 # anew
+
+mongodb/**/*.json
+
+mongodb/backup
