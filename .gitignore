@@ -1,5 +1,11 @@
 # anew
 
-mongodb/**/*.json
+# environment files
+.env
 
+# nodejs node_modules
+node/**/node_modules
+
+# mongodb backup / json
+mongodb/**/*.json
 mongodb/backup
