@@ -8,16 +8,14 @@ const BUCKET_NAME = 'moon-2075-new';
 const MYREGION = 'ap-northeast-2'
 const s3 = new AWS.S3({accessKeyId: ID, secretAccessKey: SECRET, region: MYREGION});
 
-const uploadFile = (fileName) => {
-  const fileContent = fs.readFileSync(fileName);
+const downloadFile = (fileName) => {
   const params = {
     Bucket: BUCKET_NAME,
-    Key: 'axios.png',
-    Body: fileContent
+    Key: 'axios.png'
   };
-  s3.upload(params, function(err, data) {
-    if (err) {throw err;}
-    console.log(`File uploaded succssfully. ${data.Location}`);
-  });
+    s3.getObject(params, function(err, data) {
+      if (err) { throw err;}
+      fs.writeFileSync(fileName, data.Body);
+    });
 };
-uploadFile('axios.png');
+downloadFile('axios.png');
