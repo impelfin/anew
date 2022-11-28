@@ -1,12 +1,13 @@
 var mysql = require("sync-mysql");
+const env =require("dotenv").config({ path:"../../.env"});
 
 var connection = new mysql({
-	host : "43.201.94.25",
-    	port : "3306",
-	user : "mysql",
-	password : "1234",
-	database : "st_db",
-});
+	host : process.env.host,
+	port : process.env.port,
+	user : process.env.user,
+	password : process.env.password,
+	database : process.env.database
+  })
 
 // Select all rows from st_info table
 let result = connection.query("SELECT * FROM st_info");
