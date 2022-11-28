@@ -6,6 +6,7 @@
 # nodejs node_modules
 node/**/node_modules
 node/**/package-lock.json
+node/config/pool.js
 
 # mongodb backup / json
 mongodb/**/*.json

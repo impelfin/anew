@@ -14,7 +14,7 @@ var app = express();
 
 connection.connect(function(err) {
   if(!err) {
-    console.log("Database is connected...\n\n");
+    console.log(process.env.host, "Database is connected...\n\n");
   } else {
     console.log("Error connectiong database...\n\n");
   }

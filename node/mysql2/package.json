@@ -1,5 +1,5 @@
 {
-  "name": "sync-mysql",
+  "name": "mysql2",
   "version": "1.0.0",
   "description": "",
   "main": "mysql.js",
@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "sync-mysql": "^3.0.1"
+    "mysql2": "^2.3.3",
+    "mysql2-promise": "^0.1.4"
   }
 }
