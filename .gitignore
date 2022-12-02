@@ -3,7 +3,7 @@
 # environment files
 .env
 
-# nodejs node_modules
+# nodejs files 
 node/**/node_modules
 node/**/package-lock.json
 node/config/pool.js
