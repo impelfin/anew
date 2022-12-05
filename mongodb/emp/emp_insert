@@ -1,4 +1,4 @@
-jjuse test
+use test
 db.emp.drop()
 
 db.emp.insert({eno:7499, ename:"ALLEN", job:"Salesman", sal:1250, depno:30})
