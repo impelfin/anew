@@ -5,9 +5,7 @@ const env = require("dotenv").config({ path: "../../../.env"});
 const app = express();
 
 //create signature2
-var CryptoJS = require('crypto-js');
-var SHA256 = require('crypto-js/sha256');
-var Base64 = require('crypto-js/enc-base64');
+var crypto = require('crypto');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : false}));
@@ -39,18 +37,19 @@ app.post("/send_sms", (req, res) => {
     const url = `https://sens.apigw.ntruss.com/sms/v2/services/${serviceId}/messages`;
     const url2 = `/sms/v2/services/${serviceId}/messages`;
 
-    // 중요한 key들을 한번 더 crypto-js 모듈을 이용하여 암호화 하는 과정.
-    const hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
-    hmac.update(method);
-    hmac.update(space);
-    hmac.update(url2);
-    hmac.update(newLine);
-    hmac.update(date);
-    hmac.update(newLine);
-    hmac.update(accessKey);
-    const hash = hmac.finalize();
-    const signature = hash.toString(CryptoJS.enc.Base64);
-    console.log(signature);
+    const makeSignature = (method, url, date, accessKey, secretKey) => {
+      var space = " ";
+      var newLine = "\n";
+      const hmac = crypto.createHmac('SHA256', secretKey);
+      hmac.update(method); 
+      hmac.update(space);
+      hmac.update(url2);
+      hmac.update(newLine);
+      hmac.update(date);
+      hmac.update(newLine);
+      hmac.update(accessKey);
+      return hmac.digest('base64');
+    }
 
     request({
 		    method : method,
@@ -60,7 +59,7 @@ app.post("/send_sms", (req, res) => {
     			'Contenc-type': 'application/json; charset=utf-8',
     			'x-ncp-iam-access-key': accessKey,
     			'x-ncp-apigw-timestamp': date,
-    			'x-ncp-apigw-signature-v2': signature
+    			'x-ncp-apigw-signature-v2': makeSignature
     		},
     		body : {
     			'type' : 'SMS',
@@ -78,11 +77,10 @@ app.post("/send_sms", (req, res) => {
     		else {
     			resultCode = 200;
     			console.log(html);
+    			res.json({
+    		    'Code' : resultCode, 'Name' : user_name, 'Phone_Number' : user_phone_number, 'Message' : user_msg
+    	    });
     		}
-    	});
-
-    	res.json({
-    		'Code' : resultCode, 'Name' : user_name, 'Phone_Number' : user_phone_number, 'Message' : user_msg
     	});
 });
 
