@@ -14,3 +14,7 @@ node/**/uploadedFiles
 # mongodb backup / json
 mongodb/**/*.json
 mongodb/backup
+
+
+# react App
+react/**/node_modules
