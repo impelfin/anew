@@ -38,10 +38,11 @@ router.get('/getdata', function(req, res, next) {
 //        console.log('resultCode', response.resultCode);
 //        console.log('Headers', JSON.stringify(response.headers));
         let data = JSON.parse(body);
-        console.log(data['response']['body']['items']['item']['man-file']);
+        var result = data['response']['body']['items']['item']['man-file'];
+        console.log("")
         let imgSrcArr = data['response']['body']['items']['item'][0]['man-file'].split(',');
         let imgSrc1 = imgSrcArr[0].slice(1);
-        console.log(imgSrc1);
+        console.log("imgSrc1 : " + imgSrc1);
 
         res.writeHead(200);
         var template =`
