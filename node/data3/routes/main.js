@@ -26,7 +26,7 @@ var DataSchema = mongoose.Schema({
 })
 
 // create model with mongodb collection and schema
-var Data = mongoose.model('weathers', DataSchema);
+var Data = mongoose.model('weather2', DataSchema);
 
 // getdata
 router.get('/getdata', function(req, res, next) {
@@ -39,12 +39,13 @@ router.get('/getdata', function(req, res, next) {
 //        console.log('resultCode', response.resultCode);
 //        console.log('Headers', JSON.stringify(response.headers));
         let data = JSON.parse(body);
-        console.log(data['response']['body']['items']['item']['man-file']);
-        let imgSrcArr = data['response']['body']['items']['item'][0]['man-file'].split(',');
-        let imgSrc1 = imgSrcArr[0].slice(1);
-        let imgSrc2 = imgSrcArr[1].trim().slice(0, -1);
-        console.log(imgSrc1);
-        console.log(imgSrc2);
+        var result = data['response']['body']['items']['item'][0]['man-file']
+        var imgSrc1 = ""
+        for (var i=1; i<((result.length) / 2)-1; i++) imgSrc1 = imgSrc1.concat(result[i])
+        var imgSrc2 = ""
+        for (var i=((result.length) / 2)+1; i<result.length-1; i++) imgSrc2 = imgSrc2.concat(result[i])
+        console.log("img1 : " + imgSrc1);
+        console.log("img2 : " + imgSrc2);
 
         res.writeHead(200);
         var template =`

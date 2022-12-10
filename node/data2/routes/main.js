@@ -21,12 +21,11 @@ queryParams += '&' + encodeURIComponent('time') + '=' + encodeURIComponent(day);
 // define schema
 var DataSchema = mongoose.Schema({
     day_v : String,
-    imgSrc1_v : String,
-    imgSrc2_v : String
+    imgSrc1_v : String
 })
 
 // create model with mongodb collection and schema
-var Data = mongoose.model('weather2', DataSchema);
+var Data = mongoose.model('weathers', DataSchema);
 
 // getdata
 router.get('/getdata', function(req, res, next) {
@@ -39,13 +38,10 @@ router.get('/getdata', function(req, res, next) {
 //        console.log('resultCode', response.resultCode);
 //        console.log('Headers', JSON.stringify(response.headers));
         let data = JSON.parse(body);
-        var result = data['response']['body']['items']['item'][0]['man-file']
-        var imgSrc1 = ""
-        for (var i=1; i<((result.length) / 2)-1; i++) imgSrc1 = imgSrc1.concat(result[i])
-        var imgSrc2 = ""
-        for (var i=((result.length) / 2)+1; i<result.length-1; i++) imgSrc2 = imgSrc2.concat(result[i])
-        console.log("img1 : " + imgSrc1);
-        console.log("img2 : " + imgSrc2);
+        console.log(data['response']['body']['items']['item']['man-file']);
+        let imgSrcArr = data['response']['body']['items']['item'][0]['man-file'].split(',');
+        let imgSrc1 = imgSrcArr[0].slice(1);
+        console.log(imgSrc1);
 
         res.writeHead(200);
         var template =`
@@ -57,13 +53,12 @@ router.get('/getdata', function(req, res, next) {
         </head>
         <body>
         <img src="${imgSrc1}" width="500" height="500"></img><p>
-        <img src="${imgSrc2}" width="500" height="500"></img><br>
         </body>
         </html>
         `;
         res.end(template);
         
-        var newData = new Data({day_v : day, imgSrc1_v : imgSrc1, imgSrc2_v : imgSrc2})
+        var newData = new Data({day_v : day, imgSrc1_v : imgSrc1})
         newData.save(function(err, result) {
             if (err) return console.error(err)
             console.log(new Date(), result)
@@ -86,7 +81,6 @@ router.get('/list', function(req, res, next) {
         </head>
         <body>
         <img src="${docs['imgSrc1_v']}" width="500" height="500"></img><p>
-        <img src="${docs['imgSrc2_v']}" width="500" height="500"></img><br>
         </body>
         </html>
         `;
