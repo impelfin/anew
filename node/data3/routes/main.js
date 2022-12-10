@@ -39,8 +39,7 @@ router.get('/getdata', function(req, res, next) {
 //        console.log('resultCode', response.resultCode);
 //        console.log('Headers', JSON.stringify(response.headers));
         let data = JSON.parse(body);
-        var result = data['response']['body']['items']['item']['man-file'];
-        console.log("\n")
+        console.log(data['response']['body']['items']['item']['man-file']);
         let imgSrcArr = data['response']['body']['items']['item'][0]['man-file'].split(',');
         let imgSrc1 = imgSrcArr[0].slice(1);
         let imgSrc2 = imgSrcArr[1].slice(1);
