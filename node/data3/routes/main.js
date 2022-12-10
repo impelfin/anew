@@ -39,13 +39,13 @@ router.get('/getdata', function(req, res, next) {
 //        console.log('resultCode', response.resultCode);
 //        console.log('Headers', JSON.stringify(response.headers));
         let data = JSON.parse(body);
+        console.log(data['response']['body']['items']['item']['man-file']);
         let imgSrcArr = data['response']['body']['items']['item'][0]['man-file'].split(',');
         let imgSrc1 = imgSrcArr[0].slice(1);
         let imgSrc2 = imgSrcArr[1].trim().slice(0, -1);
         console.log(imgSrc1);
         console.log(imgSrc2);
 
-        console.log(data['response']['body']['items']['item']['man-file']);
         res.writeHead(200);
         var template =`
         <!doctype html>

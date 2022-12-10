@@ -20,12 +20,13 @@ queryParams += '&' + encodeURIComponent('time') + '=' + encodeURIComponent(day);
 
 // define schema
 var DataSchema = mongoose.Schema({
-    day : String,
-    manfile : String
+    day_v : String,
+    imgSrc1_v : String,
+    imgSrc2_v : String
 })
 
 // create model with mongodb collection and schema
-var Data = mongoose.model('weather', DataSchema);
+var Data = mongoose.model('weather2', DataSchema);
 
 // getdata
 router.get('/getdata', function(req, res, next) {
@@ -33,27 +34,61 @@ router.get('/getdata', function(req, res, next) {
             url : url + queryParams,
             method : "GET"
     }, function (error, response, body) {
-//        Data.find({}).remove().exec();
-//       if (error) console.log(error)
+        Data.find({}).remove().exec();
+        if (error) console.log(error);
 //        console.log('resultCode', response.resultCode);
 //        console.log('Headers', JSON.stringify(response.headers));
-        var data = JSON.parse(body)
+        let data = JSON.parse(body);
         var result = data['response']['body']['items']['item'][0]['man-file']
-        var url = ""
-        for (var i=1; i<((result.length) / 2)-1; i++) url = url.concat(result[i])
-        console.log(url)
+        var imgSrc1 = ""
+        for (var i=1; i<((result.length) / 2)-1; i++) imgSrc1 = imgSrc1.concat(result[i])
+        var imgSrc2 = ""
+        for (var i=((result.length) / 2)+1; i<result.length-1; i++) imgSrc2 = imgSrc2.concat(result[i])
+        console.log("img1 : " + imgSrc1);
+        console.log("img2 : " + imgSrc2);
+
         res.writeHead(200);
-        var template = `
-         <!doctype html>
-         <html>
-         <head>
-          <title>Result</title>
-          <meta charset="utf-8">
-         </head>
-         <body>
-            <img src=${url} width="500" height="500" ></img>
-         </body>
-         </html>
+        var template =`
+        <!doctype html>
+        <html>
+        <head>
+        <title>Result</title>
+        <meta charset="urf-8">
+        </head>
+        <body>
+        <img src="${imgSrc1}" width="500" height="500"></img><p>
+        <img src="${imgSrc2}" width="500" height="500"></img><br>
+        </body>
+        </html>
+        `;
+        res.end(template);
+        
+        var newData = new Data({day_v : day, imgSrc1_v : imgSrc1, imgSrc2_v : imgSrc2})
+        newData.save(function(err, result) {
+            if (err) return console.error(err)
+            console.log(new Date(), result)
+        })
+    })
+})
+
+// list
+router.get('/list', function(req, res, next) {
+    Data.findOne({}, function(err, docs) {
+        if(err) console.log('err');
+        console.log(docs)
+        res.writeHead(200);
+        var template =`
+        <!doctype html>
+        <html>
+        <head>
+        <title>Result</title>
+        <meta charset="urf-8">
+        </head>
+        <body>
+        <img src="${docs['imgSrc1_v']}" width="500" height="500"></img><p>
+        <img src="${docs['imgSrc2_v']}" width="500" height="500"></img><br>
+        </body>
+        </html>
         `;
         res.end(template);
     })
