@@ -44,7 +44,7 @@ router.get('/getdata', function(req, res, next) {
 //        console.log('Headers', JSON.stringify(response.headers));
         let data = JSON.parse(body);
         console.log("")
-//        console.log(data['response']['body']['items']['item'])
+        console.log(data['response']['body']['items']['item'])
         
         let imgSrcArr = data['response']['body']['items']['item'][0]['man-file'].split(',');
         console.log(imgSrcArr)    
@@ -54,7 +54,7 @@ router.get('/getdata', function(req, res, next) {
         let imgSrc3 = imgSrcArr[2].trim();
         let imgSrc4 = imgSrcArr[3].trim();
         let imgSrc5 = imgSrcArr[4].trim();
-        let imgSrc6 = imgSrcArr[5].slice(0,-1).trim();
+        let imgSrc6 = imgSrcArr[5].slice(0).trim();
         
         console.log("imgSrc1 : " + imgSrc1)
         console.log("imgSrc2 : " + imgSrc2)
