@@ -10,7 +10,7 @@ app.get("/Hello", (req, res) => {
   res.send("Hello SMS Service~!!");
 });
 
-function send_message(phone_number, msg) {
+function send_message(phone_number, user_msg) {
   var user_phone_number = phone_number;//수신 전화번호 기입
   var resultCode = 404;
   const date = Date.now().toString();
@@ -47,7 +47,7 @@ function send_message(phone_number, msg) {
       type: "SMS",
       countryCode: "82",
       from: process.env.My_number,
-      content: msg,
+      content: `${user_phone_number} 발송 메시지 ${user_msg}`,
       messages: [
         { to: `${user_phone_number}`, },],
     },
@@ -61,8 +61,8 @@ function send_message(phone_number, msg) {
 }
 
 app.post("/send_sms", (req, res) => {
-  const { phone_number, msg } = req.body
-  send_message(phone_number, msg);
+  const { phone_number, user_msg } = req.body
+  send_message(phone_number, user_msg);
   res.send("Complete!")
 });
 

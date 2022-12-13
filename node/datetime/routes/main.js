@@ -35,21 +35,24 @@ function printKorDate() {
   return `${dateString} ${dayName}`;
 }
 
-// simple api
+// return today
 app.get("/getdate", (req, res) => {
     let today = new Date().toLocaleDateString('sv').replaceAll('-','');
+    console.log(today)
     res.send(today);
 });
 
 // 영어 버튼 클릭
 app.get("/date/en", (req, res) => {
     const text = printDate();
+    console.log(text)
     res.send(text)
 });
 
 // 한글 버튼 클릭
 app.get("/date/ko", (req, res) => {
     const text = printKorDate();
+    console.log(text)
     res.send(text)
 });
 

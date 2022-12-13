@@ -19,9 +19,8 @@ app.get("/Hello", (req, res) => {
 });
 
 app.post("/send_sms", (req, res) => {
-    const user_name = req.body.name
     const user_phone_number = req.body.phone_number
-    const user_msg = req.body.msg
+    const msg = req.body.msg
 
     var resultCode = 200;
     const date = Date.now().toString();
@@ -65,7 +64,7 @@ app.post("/send_sms", (req, res) => {
     			'type' : 'SMS',
     			'countryCode' : '82',
     			'from' : my_number,
-    			'content' : `${user_name} 발송 메시지 ${user_msg}`,
+    			'content' : `${user_phone_number} 발송 메시지 ${msg}`,
     			'messages' : [
     				{
     					'to' : `${user_phone_number}`
@@ -81,7 +80,7 @@ app.post("/send_sms", (req, res) => {
     	});
 
     	res.json({
-    		'Code' : resultCode, 'Name' : user_name, 'Phone_Number' : user_phone_number, 'Message' : user_msg
+    		'Code' : resultCode, 'Phone_Number' : user_phone_number, 'Message' : msg
     	});
 });
 
