@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1> Mongoose Test Example</h1>
+<form method='post' action='/insert' name='mongoform' >
+      <input type='button' value='List'  onclick='document.targetURL.location.href="/list"' >
+      <p>
+      id <input type='text' size='10' name='id'>
+      <p>
+      name <input type='text' size='10' name='name'>
+      <p>
+      <input type='button' value='Insert' onclick='document.targetURL.location.href="/insert?id="+document.mongoform.id.value+"&name="+document.mongoform.name.value'>
+</form>
+<iframe name=targetURL class="iframe-preview center" width="80%" height="400" style="border:none;" src="http://43.201.94.25:3000/list">
+</body>
+</html>
