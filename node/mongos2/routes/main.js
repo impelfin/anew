@@ -70,17 +70,17 @@ router.get('/list', function(req, res, next) {
                 <tbody>
                     <tr>
                         <form method='post' action='/update'>
-                        <th><input type='text' id="input1" size='5' value=${docs[i]['id']} name='id' readonly></th>
-                        <th><input type='text' id="input2" size='10' value=${docs[i]['name']} name='name'</th>
-                        <th>
-                        <button type="submit" name='upKey' value=${docs[i]['id']}>update</button>
+                            <th><input type='text' id="input1" size='5' value=${docs[i]['id']} name='id' readonly></th>
+                            <th><input type='text' id="input2" size='10' value=${docs[i]['name']} name='name'</th>
+                            <th>
+                            <button type="submit" name='upKey' value=${docs[i]['id']}>update</button>
+                            </th>
                         </form>
-                        </th>
-                        <th>
                         <form method='post' action='/delete'>
-                        <button type="submit" name='delKey' value=${docs[i]['id']}>del</button>
+                            <th>
+                            <button type="submit" name='delKey' value=${docs[i]['id']}>del</button>
+                            </th>
                         </form>
-                        </th>
                     </tr>
                 </tbody>
                 `;
@@ -99,21 +99,24 @@ router.get('/insert', function(req, res, next) {
     var id = req.query.id;
     var name = req.query.name;
     var data = new Data({'id' : id, 'name' : name })
-    
-    data.save(function(err, silence) {
-        if(err) {
-            console.log('err')
-            res.status(500).send('update error')
-            return;
-        }
-        res.status(200).send("Inserted")
-    })
+
+    if (id == "" || name == "") {
+        res.status(401).send("Enter the id and name values~!!");
+    } else { 
+        data.save(function(err, silence) {
+            if(err) {
+                console.log('err')
+                res.status(500).send('update error')
+                return;
+            }
+            res.status(200).send("Inserted")
+        })
+    }
 })
 
 // update
 router.post('/update', function(req, res, next) {
-    var id = req.body.id;
-    var name = req.body.name;
+    var { id, name } = req.body;
 
     Data.findOne({'id':id}, function(err, user) {
         if(err) {

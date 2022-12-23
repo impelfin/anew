@@ -2,7 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title> Mongoose2 </title>
+<script>
+      function refresh(){
+            window.location.reload();
+      }
+</script>
 </head>
 <body>
 <h1> Mongoose Test Example</h1>
@@ -13,7 +18,7 @@
       <p>
       name <input type='text' size='10' name='name'>
       <p>
-      <input type='button' value='Insert' onclick='document.targetURL.location.href="/insert?id="+document.mongoform.id.value+"&name="+document.mongoform.name.value'>
+      <input type='button' value='Insert' onclick='document.targetURL.location.href="/insert?id="+document.mongoform.id.value+"&name="+document.mongoform.name.value;refresh()'>
 </form>
 <iframe name=targetURL class="iframe-preview center" width="80%" height="400" style="border:none;" src="http://43.201.94.25:3000/list">
 </body>
