@@ -1,11 +1,10 @@
 # anew
-.c9
-.idea
 
 # environment files
 .env
 
 # nodejs files 
+.idea
 node/**/node_modules
 node/**/package-lock.json
 node/config/pool.js
@@ -15,3 +14,7 @@ node/**/uploadedFiles
 # mongodb backup / json
 mongodb/**/*.json
 mongodb/backup
+
+
+# react App
+react/**/node_modules
