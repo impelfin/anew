@@ -22,33 +22,67 @@ router.get('/list', function(req, res, next) {
         <head>
             <title>Result</title>
             <meta charset="utf-8">
+            <style>
+                table {
+                    border-collapse: collapse;
+                    border: 1px solid #aaa;
+                }
+                thead th,
+                thead td {
+                    background-color: #bbdefb;
+                }
+                th,
+                td {
+                  border: 1px solid #aaa;
+                  background-clip: padding-box;
+                }
+                #input1 {
+                    width : 50px;
+                    height : 10px;
+                    border : none;
+                }
+                #input2 {
+                    width : 120px;
+                    height : 10px;
+                    border : none;
+                }
+                button {
+                  background-color: #e7e7e7;
+                  color: black;
+                  border: 1px solid #aaa;
+                  padding : 2px 5px;
+                }
+            </style>
         </head>
         <body>
-            <table border="1" margin: auto; text-align : center;>
-            <tr>
-                <th>id</th>
-                <th>name</th>
-                <th>update</th>
-                <th>del</th>
-            </tr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>update</th>
+                        <th>del</th>
+                    </tr>
+                </thead>
             `;
             for(var i=0; i<docs.length; i++) {
                 template += `
-
-                <tr>
-                    <form method='post' action='/update'>
-                    <th><input type='text' size='5' value=${docs[i]['id']} name='id' readonly></th>
-                    <th><input type='text' size='10' value=${docs[i]['name']} name='name'</th>
-                    <th>
-                    <button type="submit" name='upKey' value=${docs[i]['id']}>update</button>
-                    </form>
-                    </th>
-                    <th>
-                    <form method='post' action='/delete'>
-                    <button type="submit" name='delKey' value=${docs[i]['id']}>del</button>
-                    </form>
-                    </th>
-                </tr>
+                <tbody>
+                    <tr>
+                        <form method='post' action='/update'>
+                        <th><input type='text' id="input1" size='5' value=${docs[i]['id']} name='id' readonly></th>
+                        <th><input type='text' id="input2" size='10' value=${docs[i]['name']} name='name'</th>
+                        <th>
+                        <button type="submit" name='upKey' value=${docs[i]['id']}>update</button>
+                        </form>
+                        </th>
+                        <th>
+                        <form method='post' action='/delete'>
+                        <button type="submit" name='delKey' value=${docs[i]['id']}>del</button>
+                        </form>
+                        </th>
+                    </tr>
+                </tbody>
                 `;
             }
             template += `
